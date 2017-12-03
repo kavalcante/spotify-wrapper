@@ -42,10 +42,10 @@ var wrappify = require('wrappify');
 
 ```html
 <!-- to import non-minified version -->
-<script src="wrappify.umd.js"></script>
+<script src="wrappify.js"></script>
 
 <!-- to import minified version -->
-<script src="wrappify.umd.min.js"></script>
+<script src="wrappify.min.js"></script>
 ```
 
 After that the library will be available to the Global as `wrappify`. Follow an example:
