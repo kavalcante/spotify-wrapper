@@ -2,7 +2,7 @@
   "name": "wrappify",
   "version": "1.0.0",
   "description": "A javascript wrapper library to work with Spotify API.",
-  "main": "src/index.js",
+  "main": "lib/index.js",
   "scripts": {
     "clear": "rimraf lib",
     "build:watch": "npm run build:node -- --watch",
@@ -17,6 +17,10 @@
     "test:coverage": "nyc npm test",
     "coveralls": "npm run test:coverage && nyc report --reporter=text-lcov | coveralls"
   },
+  "files": [
+    "dist",
+    "lib"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/kavalcante/wrappify.git"
