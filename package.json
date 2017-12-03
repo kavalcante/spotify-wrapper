@@ -1,6 +1,6 @@
 {
   "name": "wrappify",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A javascript wrapper library to work with Spotify API.",
   "main": "lib/index.js",
   "scripts": {

@@ -5,7 +5,22 @@
   <title>Wrappify Test</title>
 </head>
 <body>
+
+<div id="albums"></div>
+
+<script src="../dist/wrappify.js"></script>
+
+<script>
+const albums = wrappify.searchAlbums('Linkin Park');
+const albumsEl = document.getElementById('albums');
+albums
+  .then((data) => {
+    const markup = data.albums.items.map(item => `<img src='${item.images[0].url}' alt='${item.name}' />`)
+      .join('');
+    albumsEl.innerHTML = markup;
+  });
+</script></script>
   
-<script src="../dist/wrappify.umd.js"></script>
+<script src="../dist/wrappify.js"></script>
 </body>
 </html>
