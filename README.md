@@ -1,5 +1,7 @@
 # Wrappify
 
+[![Build Status](https://travis-ci.org/kavalcante/wrappify.svg?branch=master)](https://travis-ci.org/kavalcante/wrappify)
+
 A wrapper to work with the [Spotify Web API](https://developer.spotify.com/web-api/).
 
 ## Browser Support
