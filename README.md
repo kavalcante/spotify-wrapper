@@ -1,6 +1,6 @@
 # Wrappify
 
-[![Build Status](https://travis-ci.org/kavalcante/wrappify.svg?branch=master)](https://travis-ci.org/kavalcante/wrappify)
+[![Build Status](https://travis-ci.org/kavalcante/wrappify.svg?branch=master)](https://travis-ci.org/kavalcante/wrappify) [![Coverage Status](https://coveralls.io/repos/github/kavalcante/wrappify/badge.svg?branch=master)](https://coveralls.io/github/kavalcante/wrappify?branch=master)
 
 A wrapper to work with the [Spotify Web API](https://developer.spotify.com/web-api/).
 
