@@ -21,23 +21,30 @@ This library depends on [fetch](https://fetch.spec.whatwg.org/) to make requests
 ```sh
 npm install wrappify --save
 ```
-
 ## How to use
 
 ### ES6
 
 ```js
 // to import a specific method
-import { method } from 'wrappify';
+import Wrappify from 'wrappify';
 
-// to import everything
-import * as wrappify from 'wrappify';
+const spotify = new Wrappify({
+  token: 'YOUR_TOKEN_HERE'
+});
+
+// using  method
+spotify.search.artists('Linkin Park');
 ```
 
 ### CommonJS
 
 ```js
-var wrappify = require('wrappify');
+const Wrappify = require('wrappify').default;
+
+const spotify = new Wrappify({
+  token: 'YOUR_TOKEN_HERE'
+});
 ```
 
 ### UMD in Browser
@@ -50,37 +57,22 @@ var wrappify = require('wrappify');
 <script src="wrappify.min.js"></script>
 ```
 
-After that the library will be available to the Global as `wrappify`. Follow an example:
+After that the library will be available to the Global as `Wrappify`. Follow an example:
 
 ```js
-const albums = wrappify.searchAlbums('Choosen Artist');
+
+const spotify = new Wrappify({
+  token: 'YOUR_TOKEN_HERE'
+});
+
+const albums = spotify.search.albums('Choosen Artist');
 ```
 
 ## Methods
 
 > Follow the methods that the library provides.
 
-### search(query, types)
-
-> Search for informations about artists, albums, tracks or playlists. Test in [Spotify Web Console](https://developer.spotify.com/web-api/console/get-search-item/).
-
-**Arguments**
-
-| Argument | Type              | Options                                 |
-|----------|-------------------|-----------------------------------------|
-|`query`   |*string*           | 'Any search query'                      |
-|`type`    |*Array of strings* | ['artist', 'album', 'track', 'playlist']|
-
-**Example**
-
-```js
-search('Linkin Park', ['artist', 'album'])
-  .then(data => {
-    // do what you want with the data
-  })
-```
-
-### searchAlbums(query)
+### search.albums(query)
 
 > Search for informations about Albums with provided query. Test in [Spotify Web Console](https://developer.spotify.com/web-api/console/get-search-item/) with type defined as *album*.
 
@@ -94,13 +86,13 @@ search('Linkin Park', ['artist', 'album'])
 **Example**
 
 ```js
-searchAlbums('Linkin Park')
+spotify.search.albums('Linkin Park')
   .then(data => {
     // do what you want with the data
   })
 ```
 
-### searchArtists(query)
+### search.artists(query)
 
 > Search for informations about Artists with provided query. Test in [Spotify Web Console](https://developer.spotify.com/web-api/console/get-search-item/) with type defined as *artist*.
 
@@ -114,13 +106,13 @@ searchAlbums('Linkin Park')
 **Example**
 
 ```js
-searchArtists('Linkin Park')
+spotify.search.artists('Linkin Park')
   .then(data => {
     // do what you want with the data
   })
 ```
 
-### searchTracks(query)
+### search.tracks(query)
 
 > Search for informations about Tracks with provided query. Test in [Spotify Web Console](https://developer.spotify.com/web-api/console/get-search-item/) with type defined as *track*.
 
@@ -134,13 +126,13 @@ searchArtists('Linkin Park')
 **Example**
 
 ```js
-searchTracks('Numb')
+spotify.search.tracks('Numb')
   .then(data => {
     // do what you want with the data
   })
 ```
 
-### searchPlaylists(query)
+### search.playlists(query)
 
 > Search for informations about Playlist with provided query. Test in [Spotify Web Console](https://developer.spotify.com/web-api/console/get-search-item/) with type defined as *playlist*.
 
@@ -154,13 +146,13 @@ searchTracks('Numb')
 **Example**
 
 ```js
-searchPlaylists('Happy Day')
+spotify.search.playlists('Happy Day')
   .then(data => {
     // do what you want with the data
   })
 ```
 
-### getAlbum(id)
+### album.getAlbum(id)
 
 > Search for informations about a specific Album with provided id. Test in [Spotify Web Console](https://developer.spotify.com/web-api/console/get-album/).
 
@@ -174,13 +166,13 @@ searchPlaylists('Happy Day')
 **Example**
 
 ```js
-getAlbum('4aawyAB9vmqN3uQ7FjRGTy')
+spotify.album.getAlbum('4aawyAB9vmqN3uQ7FjRGTy')
   .then(data => {
     // do what you want with the data
   })
 ```
 
-### getAlbums(ids)
+### album.getAlbums(ids)
 
 > Search for informations about some Albums with all id's. Test in [Spotify Web Console](https://developer.spotify.com/web-api/console/get-several-albums/).
 
@@ -193,13 +185,13 @@ getAlbum('4aawyAB9vmqN3uQ7FjRGTy')
 **Example**
 
 ```js
-getAlbum(['4aawyAB9vmqN3uQ7FjRGTy', '1A2GTWGtFfWp7KSQTwWOyo'])
+spotify.album.getAlbums(['4aawyAB9vmqN3uQ7FjRGTy', '1A2GTWGtFfWp7KSQTwWOyo'])
   .then(data => {
     // do what you want with the data
   })
 ```
 
-### getAlbumTracks(id)
+### album.getTracks(id)
 
 > Search for all tracks in a specific Album with provided id. Test in [Spotify Web Console](https://developer.spotify.com/web-api/console/get-album-tracks/).
 
@@ -212,7 +204,7 @@ getAlbum(['4aawyAB9vmqN3uQ7FjRGTy', '1A2GTWGtFfWp7KSQTwWOyo'])
 **Example**
 
 ```js
-getAlbum('4aawyAB9vmqN3uQ7FjRGTy')
+spotify.album.getTracks('4aawyAB9vmqN3uQ7FjRGTy')
   .then(data => {
     // do what you want with the data
   })
