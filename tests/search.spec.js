@@ -4,13 +4,7 @@ import chai, { expect } from 'chai';
 import sinon from 'sinon';
 import sinonChai from 'sinon-chai';
 import sinonStubPromise from 'sinon-stub-promise';
-import {
-  search,
-  searchAlbums,
-  searchArtists,
-  searchTracks,
-  searchPlaylists,
-} from '../src/search';
+import Wrappify from '../src/index';
 
 chai.use(sinonChai);
 sinonStubPromise(sinon);
@@ -18,10 +12,15 @@ sinonStubPromise(sinon);
 global.fetch = require('node-fetch');
 
 describe('Search', () => {
+  let spotify;
   let fetchedStub;
   let promise;
 
   beforeEach(() => {
+    spotify = new Wrappify({
+      token: 'foo',
+    });
+
     fetchedStub = sinon.stub(global, 'fetch');
     promise = fetchedStub.returnsPromise();
   });
@@ -31,117 +30,82 @@ describe('Search', () => {
   });
 
   describe('smoke tests', () => {
-    it('should exists the search method', () => expect(search).to.exist);
+    it('should exists the spotify.search.albums method', () => expect(spotify.search.albums).to.exist);
 
-    it('should exists the searchAlbums method', () => expect(searchAlbums).to.exist);
+    it('should exists the spotify.search.artists method', () => expect(spotify.search.artists).to.exist);
 
-    it('should exists the searchArtists method', () => expect(searchArtists).to.exist);
+    it('should exists the spotify.search.tracks method', () => expect(spotify.search.tracks).to.exist);
 
-    it('should exists the searchTracks method', () => expect(searchTracks).to.exist);
-
-    it('should exists the searchPlaylists method', () => expect(searchPlaylists).to.exist);
+    it('should exists the spotify.search.playlists method', () => expect(spotify.search.playlists).to.exist);
   });
 
-  describe('Generic Search', () => {
+  describe('spotify.search.artists', () => {
     it('should call fetch function', () => {
-      const artists = search();
-      return expect(fetchedStub).to.have.been.calledOnce;
-    });
-
-    it('should receive the correct url to fetch', () => {
-      context('passing one type', () => {
-        const artists = search('Muse', 'artist');
-        expect(fetchedStub).to.have.been
-          .calledWith('https://api.spotify.com/v1/search?q=Muse&type=artist');
-
-        const albums = search('Hybryd Theory', 'album');
-        expect(fetchedStub).to.have.been
-          .calledWith('https://api.spotify.com/v1/search?q=Hybryd Theory&type=album');
-      });
-
-      context('passing more than one type', () => {
-        const artistsAndAlbums = search('Incubus', ['artist', 'album']);
-
-        expect(fetchedStub).to.have.been
-          .calledWith('https://api.spotify.com/v1/search?q=Incubus&type=artist,album');
-      });
-    });
-
-    it('should return the JSON Data from the Promise', () => {
-      promise.resolves({ body: 'json' });
-      const artists = search('Incubus', 'artist');
-
-      expect(artists.resolveValue).to.be.eql({ body: 'json' });
-    });
-  });
-
-  describe('searchArtists', () => {
-    it('should call fetch function', () => {
-      const artists = searchArtists('Incubus');
+      const artists = spotify.search.artists('Incubus');
 
       return expect(fetchedStub).to.have.been.calledOnce;
     });
 
     it('should call fetch with the correct URL', () => {
-      const artists = searchArtists('Muse');
+      const artists = spotify.search.artists('Muse');
 
       expect(fetchedStub).to.have.been.calledWith('https://api.spotify.com/v1/search?q=Muse&type=artist');
 
-      const artists2 = searchArtists('Incubus');
+      const artists2 = spotify.search.artists('Incubus');
 
       expect(fetchedStub).to.have.been.calledWith('https://api.spotify.com/v1/search?q=Incubus&type=artist');
     });
   });
 
-  describe('searchAlbums', () => {
+  describe('spotify.search.albums', () => {
     it('should call fetch function', () => {
-      const albums = searchAlbums('Incubus');
+      const albums = spotify.search.albums('Incubus');
 
       return expect(fetchedStub).to.have.been.calledOnce;
     });
 
     it('should call fetch with the correct URL', () => {
-      const albums = searchAlbums('Hybryd Theory');
+      const albums = spotify.search.albums('Hybryd Theory');
 
       expect(fetchedStub).to.have.been.calledWith('https://api.spotify.com/v1/search?q=Hybryd Theory&type=album');
 
-      const albums2 = searchAlbums('Meteora');
+      const albums2 = spotify.search.albums('Meteora');
 
       expect(fetchedStub).to.have.been.calledWith('https://api.spotify.com/v1/search?q=Meteora&type=album');
     });
   });
 
-  describe('searchTracks', () => {
+  describe('spotify.search.tracks', () => {
     it('should call fetch function', () => {
-      const tracks = searchTracks('Numb');
+      const tracks = spotify.search.tracks('Numb');
 
       return expect(fetchedStub).to.have.been.calledOnce;
     });
 
     it('should call fetch with the correct URL', () => {
-      const tracks = searchTracks('Numb');
+      const tracks = spotify.search.tracks('Numb');
 
       expect(fetchedStub).to.have.been.calledWith('https://api.spotify.com/v1/search?q=Numb&type=track');
 
-      const tracks2 = searchTracks('In The End');
+      const tracks2 = spotify.search.tracks('In The End');
 
       expect(fetchedStub).to.have.been.calledWith('https://api.spotify.com/v1/search?q=In The End&type=track');
     });
   });
 
-  describe('searchPlaylists', () => {
+  describe('spotify.search.playlists', () => {
     it('should call fetch function', () => {
-      const playlists = searchPlaylists('Linkin Park');
+      const playlists = spotify.search.playlists('Linkin Park');
 
       return expect(fetchedStub).to.have.been.calledOnce;
     });
 
     it('should call fetch with the correct URL', () => {
-      const playlists = searchPlaylists('Linkin Park');
+      const playlists = spotify.search.playlists('Linkin Park');
 
       expect(fetchedStub).to.have.been.calledWith('https://api.spotify.com/v1/search?q=Linkin Park&type=playlist');
 
-      const playlists2 = searchPlaylists('Ghost BC');
+      const playlists2 = spotify.search.playlists('Ghost BC');
 
       expect(fetchedStub).to.have.been.calledWith('https://api.spotify.com/v1/search?q=Ghost BC&type=playlist');
     });
