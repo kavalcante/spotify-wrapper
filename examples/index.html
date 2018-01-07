@@ -11,7 +11,11 @@
 <script src="../dist/wrappify.js"></script>
 
 <script>
-const albums = wrappify.searchAlbums('Linkin Park');
+const spotify = new Wrappify({
+  token: 'BQBTRNoSbceJBNzwfPdTEwf0Q7seTdt2CXHImmny58U2P1kE9I2COK0GzH3QM46Xp55j6h1X1BKmxaeERHpfjkRfmXrcDOACZUC5eRcu87QF2yAFYi4CPeGwROctfgdnHhXRpyNdU3gtW7rzWQA',
+});
+
+const albums = spotify.search.albums('Linkin Park');
 const albumsEl = document.getElementById('albums');
 albums
   .then((data) => {
